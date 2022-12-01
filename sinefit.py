@@ -1,20 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_sin_data(n = 100, mu = 0, sigma = 0.1, dirt = 0, m = 10):
+def get_sin_data(n = 100, mu = 0, sigma = 0.05, m = 20):
     """
         Draw n samples from y = sin(2 * pi * x) with Gaussian noise ~ N(mu, sigma),
         where x in [0, 2),
-        then add m outliers, absolute offset in [0.3, 1)
+        then add m outliers
 
         return [[x_0, y_0], [x_1, y_1], ..., [x_{n-1}, y_{n-1}]]
     """
     x = np.random.uniform(0, 2, n + m)
-    y = np.sin(2 * np.pi * x)
-    noise = np.random.normal(mu, sigma, n)
-    offset = np.random.choice([-1, 1], m) * np.random.uniform(0.3, 1, m)
-    z = y + np.concatenate((noise, offset))
-    data = np.array([x, z]).T
+    y_inlier = np.sin(2 * np.pi * x[:n]) + np.random.normal(mu, sigma, n)
+    y_outlier = np.random.uniform(-2, 2, m)
+    y = np.concatenate((y_inlier, y_outlier))
+    data = np.array([x, y]).T
     return data
 
 def fit(data, lam = 0, m = 14):
