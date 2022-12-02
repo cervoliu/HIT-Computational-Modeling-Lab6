@@ -16,7 +16,7 @@ def get_sin_data(n = 100, mu = 0, sigma = 0.05, m = 20):
     data = np.array([x, y]).T
     return data
 
-def fit(data, lam = 0, m = 14):
+def OLS(data, lam = 0, m = 14):
     """
         Use least square method with L2 regularization coefficient
         lambda = lam (default = 0, i.e. without regularization) to fit data,
@@ -46,7 +46,7 @@ def draw(data, w, title):
 
 if __name__ == "__main__":
     data = get_sin_data()
-    w0 = fit(data)
-    draw(data, w0, 'least square method')
-    w1 = fit(data, 0.005)
-    draw(data, w1, 'least square method with L2 regularization')
+    w0 = OLS(data)
+    draw(data, w0, 'OLS')
+    w1 = OLS(data, 0.005)
+    draw(data, w1, 'OLS with L2 regularization')
