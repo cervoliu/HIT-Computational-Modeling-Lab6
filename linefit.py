@@ -15,7 +15,7 @@ def get_line_data(k, b, n = 50, sigma = 0.1, m = 10):
     y = np.concatenate((y_inlier, y_outlier))
     return np.array([x, y]).T
 
-def least_square(data):
+def OLS(data):
     X = np.array([[1, data[i][0]] for i in range(len(data))])
     Y = data[:, 1]
     return np.linalg.inv(np.dot(X.T, X)).dot(X.T).dot(Y)
@@ -49,14 +49,14 @@ if __name__ == "__main__":
     k = 5
     b = 7
     data = get_line_data(k, b)
-    b_ls, k_ls = least_square(data)
-    b_r, k_r = RANSAC(data, 0.01, 10000)
+    b_ols, k_ols = OLS(data)
+    b_ransac, k_ransac = RANSAC(data, 0.01, 10000)
 
     plt.plot(data[:, 0], data[:, 1], 'o', label='sample')
     X0 = np.array([0, 1])
     plt.plot(X0, k * X0 + b, 'r', label='real')
-    plt.plot(X0, k_ls * X0 + b_ls, 'b', label='least square')
-    plt.plot(X0, k_r * X0 + b_r, 'g', label='RANSAC')
+    plt.plot(X0, k_ols * X0 + b_ols, 'b', label='OLS')
+    plt.plot(X0, k_ransac * X0 + b_ransac, 'g', label='RANSAC')
     plt.legend(loc=1)
     plt.title('line fitting with outliers')
     plt.show()
