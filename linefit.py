@@ -26,24 +26,23 @@ def dis(x, y, A, B, C):
 def RANSAC(data, thr, N):
     X, Y = data[:, 0], data[:, 1]
     m = len(data)
-    k_ret = 0
-    b_ret = 0
-    tot_max = 0
-    for ep in range(N):
-        tot = 0
+    k = 0
+    b = 0
+    cnt_max = 0
+    for rnd in range(N):
+        cnt = 0
         p1 = np.random.randint(m)
         p2 = np.random.randint(m)
         while p1 == p2: p2 = np.random.randint(m)
         k_now = (Y[p1] - Y[p2]) / (X[p1] - X[p2])
         b_now = Y[p1] - k_now * X[p1]
         for i in range(m):
-            if dis(X[i], Y[i], k_now, -1, b_now) < thr:
-                tot += 1
-        if tot > tot_max:
-            k_ret = k_now
-            b_ret = b_now
-            tot_max = tot
-    return b_ret, k_ret
+            if dis(X[i], Y[i], k_now, -1, b_now) < thr: cnt += 1
+        if cnt > cnt_max:
+            k = k_now
+            b = b_now
+            cnt_max = cnt
+    return b, k
 
 if __name__ == "__main__":
     k = 5
