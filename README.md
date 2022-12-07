@@ -1,3 +1,4 @@
+计算建模 Lab6 RANSAC和最小二乘(OLS)对直线和曲线的拟合
 # 单条直线拟合
 
 ## OLS (Ordinary Least Square)
@@ -18,6 +19,12 @@ $y = \sin(2\pi x)$
 
 用 m 阶多项式拟合，由于参数个数较多（m 个），RANSAC 时间复杂度过高，故仅实现 OLS 拟合.
 
-## 最小二乘法
+## OLS
 
 建议改变 L2 正则项系数 $\lambda$ ，outlier 样本个数等参数多次测试.
+
+# 圆拟合
+
+## OLS
+
+## RANSAC
