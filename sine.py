@@ -35,9 +35,9 @@ def draw(data, w, title):
     real_y = np.sin(2 * np.pi * real_x)
     mat = np.array([real_x ** i for i in range(len(w))]).T
     fit_y = np.dot(mat, w)
-    plot1 = plt.plot(train_x, train_y, 'o', label='sample')
-    plot2 = plt.plot(real_x, fit_y, 'b', label='result')
-    plot3 = plt.plot(real_x, real_y, 'r', label='real')
+    plt.plot(train_x, train_y, 'o', label='sample')
+    plt.plot(real_x, fit_y, 'b', label='result')
+    plt.plot(real_x, real_y, 'r', label='real')
     plt.xlabel('x')
     plt.ylabel('y')
     plt.legend(loc=1)
