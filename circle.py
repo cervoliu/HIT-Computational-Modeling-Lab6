@@ -24,9 +24,12 @@ def generate_circle_data(n = 100, m = 10, xc = 2, yc = 2, r = 1, cov = [[0.01, 0
 
 def OLS(data):
     n = len(data)
-    X = np.array([[data[i][0], data[i][1], 1] for i in range(n)])
-    Y = np.array([-data[i][0] ** 2 - data[i][1] ** 2 for i in range(n)])
-    return np.linalg.inv(np.dot(X.T, X)).dot(X.T).dot(Y)
+    X = np.c_[data[:, 0], data[:, 1], np.ones(n)]
+    Y = -data[:, 0] ** 2 - data[:, 1] ** 2
+    w = np.linalg.inv(np.dot(X.T, X)).dot(X.T).dot(Y)
+    xc, yc = w[0] / -2, w[1] / -2
+    r = xc ** 2 + yc ** 2 - w[2]
+    return xc, yc, r
 
 def get_circle(p1, p2, p3):
     """
@@ -59,9 +62,8 @@ def RANSAC(data, thr, N = 10000):
 
 if __name__ == "__main__":
     data = generate_circle_data()
-    w = OLS(data)
-    xc_ols, yc_ols = w[0] / -2, w[1] / -2
-    r_ols = xc_ols ** 2 + yc_ols ** 2 - w[2]
+
+    xc_ols, yc_ols, r_ols = OLS(data)
     plot_circle(xc_ols, yc_ols, r_ols, 'r', 'OLS')
 
     xc_ransac, yc_ransac, r_ransac = RANSAC(data, 0.01)

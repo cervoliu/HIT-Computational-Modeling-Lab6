@@ -16,7 +16,7 @@ def get_line_data(k, b, n = 50, sigma = 0.1, m = 10):
     return np.array([x, y]).T
 
 def OLS(data):
-    X = np.array([[1, data[i][0]] for i in range(len(data))])
+    X = np.c_[np.ones(len(data)), data[:, 0]]
     Y = data[:, 1]
     return np.linalg.inv(np.dot(X.T, X)).dot(X.T).dot(Y)
 

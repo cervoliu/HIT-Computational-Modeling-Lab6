@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_sin_data(n = 100, mu = 0, sigma = 0.05, m = 20):
+def get_sin_data(n = 50, mu = 0, sigma = 0.05, m = 5):
     """
         Draw n samples from y = sin(2 * pi * x) with Gaussian noise ~ N(mu, sigma),
         where x in [0, 2),
@@ -16,7 +16,7 @@ def get_sin_data(n = 100, mu = 0, sigma = 0.05, m = 20):
     data = np.array([x, y]).T
     return data
 
-def OLS(data, lam = 0, m = 14):
+def OLS(data, lam = 0., m = 9):
     """
         Use least square method with L2 regularization coefficient
         lambda = lam (default = 0, i.e. without regularization) to fit data,
@@ -48,5 +48,5 @@ if __name__ == "__main__":
     data = get_sin_data()
     w0 = OLS(data)
     draw(data, w0, 'OLS')
-    w1 = OLS(data, 0.005)
+    w1 = OLS(data, 0.0005)
     draw(data, w1, 'OLS with L2 regularization')
